@@ -7,6 +7,7 @@ import {
   StatusBar,
   ActivityIndicator,
   AsyncStorage,
+  Image,
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';

@@ -13,16 +13,16 @@ const styles = StyleSheet.create({
   title: {
     textAlign: 'center',
     color: colors.blueHavan,
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 18,
   },
 
   text: {
     textAlign: 'center',
     marginTop: metrics.baseMargin,
-    fontSize: 14,
+    fontSize: 20,
     color: colors.blueHavan,
     lineHeight: 21,
+    fontWeight: 'bold',
   },
 
   form: {
