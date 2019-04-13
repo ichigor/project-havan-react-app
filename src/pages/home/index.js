@@ -37,9 +37,10 @@ export default class Home extends Component {
     this.setState({bonus:pointsObj[0].current_points});
   };
 
+
   resgatar = async () => {
     if (!this.state.resgate) {
-      const hash = 'APPI55';
+      const hash = 'APPI0' + Math.floor(Math.random() * (99 - 1) + 1);
       const userCpf = await AsyncStorage.getItem('@appHavan:cpf');
       
       await api.post('/coupon/', {
