@@ -4,22 +4,22 @@ import api from '~/services/api';
 import {
   View,
   AsyncStorage,
-  ActivityIndicator,
-  FlatList,
   Text,
   StatusBar,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 
 import styles from './styles';
 
 export default class Home extends Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
     user: '',
     resgate: '',
     bonus: '',
-    refreshing: false,
   };
 
   componentWillMount() {
@@ -28,18 +28,14 @@ export default class Home extends Component {
 
   getData = async () => {
     const user = await AsyncStorage.getItem('@appHavan:user');
-    const obj = JSON.parse(user);
-    this.setState({user:obj[0].name});
+    const userObj = JSON.parse(user);
+    this.setState({user:userObj[0].name});
     const cpf = await AsyncStorage.getItem('@appHavan:cpf');
     const pointsRequest = await api.get(`/point/${cpf}`);
     const points = pointsRequest.request._response
-    const obj2 = JSON.parse(points);
-    this.setState({bonus:obj2[0].current_points});
+    const pointsObj = JSON.parse(points);
+    this.setState({bonus:pointsObj[0].current_points});
   };
-
-  // "code": "CITY50",
-  // "value": "50",
-  // "cpf": "123"
 
   resgatar = async () => {
     if (!this.state.resgate) {
@@ -59,7 +55,7 @@ export default class Home extends Component {
       });
 
       this.setState({ resgate: hash });
-      this.setState({ bonus: '0.00' });
+      // this.setState({ bonus: '0.00' });
     }
   };
 
@@ -68,13 +64,13 @@ export default class Home extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <Text style={styles.title}>
-          Ola {this.state.user}
+            Olá {this.state.user}
         </Text>
         <Text style={styles.text}>
-Voce possui $
+          Você possui $
           {this.state.bonus}
           {' '}
-H-Coins
+          H-Coins
         </Text>
         <View style={styles.form}>
           <TouchableOpacity style={styles.button} onPress={this.resgatar}>
@@ -86,7 +82,7 @@ H-Coins
           </TouchableOpacity>
           {!!this.state.resgate && (
             <Text>
-              Apresente este numero em um caixa para retirar o seu desconto
+              Apresente este código em um caixa para retirar o seu desconto
               {this.state.desconto}
               {' '}
             </Text>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { StackNavigator } from 'react-navigation';
 import Login from './pages/login';
 import Home from './pages/home';
