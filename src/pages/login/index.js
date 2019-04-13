@@ -14,9 +14,9 @@ import api from '~/services/api';
 import styles from './styles';
 
 export default class Login extends Component {
-  static navigationOptions = {
-    header: null,
-  };
+  // static navigationOptions = {
+  //   header: null,
+  // };
 
   static propTypes = {
     navigation: PropTypes.shape({
@@ -28,16 +28,17 @@ export default class Login extends Component {
     cpf: '',
     loading: false,
     errorMessage: null,
+    user: '',
   };
 
   checkUserExists = async (cpf) => {
-    const user = await api.get(`/users/${cpf}`);
-
+    const user = await api.get(`/user/${cpf}`);
     return user;
   };
 
-  saveUser = async (cpf) => {
-    await AsyncStorage.setItem('@appHavan:cpf', cpf);
+  saveUser = async (user) => {
+    await AsyncStorage.setItem('@appHavan:cpf', this.state.cpf);
+    await AsyncStorage.setItem('@appHavan:user', user.request._response);
   };
 
   signIn = async () => {
@@ -48,9 +49,9 @@ export default class Login extends Component {
     this.setState({ loading: true });
 
     try {
-      // await this.checkUserExists(cpf);
+      const user = await this.checkUserExists(cpf);
 
-      // await this.saveUser(cpf);
+      await this.saveUser(user);
 
       const resetAction = NavigationActions.reset({
         index: 0,
